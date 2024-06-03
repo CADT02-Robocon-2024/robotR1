@@ -42,7 +42,7 @@ void loop() {
   }
   
 }
-# solenoid control
+
 void control_shoot_ball(){
     if (data.ch[10] == max_value){
       solenoid_take_ball(1);
