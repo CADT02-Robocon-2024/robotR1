@@ -1,1 +1,2 @@
-bool s_ball
+bool s_ball;
+bool manual;

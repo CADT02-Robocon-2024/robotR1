@@ -2,8 +2,8 @@
 #define mid_value 1002
 #define max_value 1722
 
-#define col_ball 4
-#define stop_ball_sensor 3
+#define col_ball 6
+#define stop_ball_sensor 7
 
 #define m_shoot 6
 #define m_takeBall 5

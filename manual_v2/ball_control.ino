@@ -8,6 +8,6 @@ void solenoid_take_ball(bool value){
   digitalWrite(col_ball,value);
   
 }
-void stop_ball(){
+// void stop_ball(){
 
-}
+// }

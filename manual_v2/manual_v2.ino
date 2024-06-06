@@ -1,5 +1,6 @@
 #include "R1_header.h"
 #include "PIN_ASSIGN.h"
+#include "logic.h"
 
 /*x1 -> 0
   y1 -> 1
@@ -17,7 +18,7 @@
 
 void setup() {
   Serial.begin(115200);
-  Wire.begin(); // Initialize I2C communication as Master
+  // Wire.begin(); // Initialize I2C communication as Master
   sbus_rx.Begin();
   mcp2515.reset();
   mcp2515.setBitrate(CAN_1000KBPS, MCP_8MHZ);
@@ -30,16 +31,22 @@ void setup() {
 void loop() {
   if (sbus_rx.Read()) {
     data = sbus_rx.data();
-    sbus_tran();
+    // sbus_data();
+    // sbus_tran();
   }
     
     // sbus_data();
   if (data.ch[8] == max_value) {
     // sbus_tran();
-    movement();
-    control_shoot_ball();   
-        
+    manual = true;        
+  }else{
+    manual = false;
   }
+  if(manual == true) {
+    movement();
+    control_shoot_ball(); 
+  }
+  
   
 }
 
@@ -50,13 +57,13 @@ void control_shoot_ball(){
       solenoid_take_ball(0);
     }
     if (data.ch[7] == max_value){
-      motor_shoot_ball(800);
+      motor_shoot_ball(600);
     }else if (data.ch[7] == mid_value){
       motor_shoot_ball(0);
     }
     if (data.ch[4] == max_value) {
       motor_take_ball(400);
-    }else if(data.ch[4] == min_value){
+    }else if(data.ch[4] == mid_value){
       motor_take_ball(0);
     }
 }
