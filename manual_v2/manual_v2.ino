@@ -59,12 +59,12 @@ void control_shoot_ball(){
       solenoid_take_ball(0);
     }
     if (data.ch[7] == max_value){
-      motor_shoot_ball(600);
+      motor_shoot_ball(700);
     }else if (data.ch[7] == mid_value){
       motor_shoot_ball(0);
     }
     if (data.ch[4] == max_value) {
-      motor_take_ball(400);
+      motor_take_ball(300);
     }else if(data.ch[4] == mid_value){
       motor_take_ball(0);
     }

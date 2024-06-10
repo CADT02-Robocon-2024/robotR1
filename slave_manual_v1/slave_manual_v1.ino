@@ -38,7 +38,7 @@ void loop() {
   // printsbus();
   if (sbus_rx.Read()) {
     data = sbus_rx.data();
-    // sbus_data();
+    sbus_data();
     // Serial.println("sbus");
     // sbus_tran();
   }
@@ -46,35 +46,63 @@ void loop() {
     // sbus_tran();
     solenoid_control();  
         
-  }  
+  }else{
+    ch5 = true;
+    ch9 = true;
+  }
   
 }
 void solenoid_control() {
-  if (data.ch[5] == max_value){
-    slider(1);
-  }else{
-    slider(0);
+  if(ch5 == true){
+    if (data.ch[5] == max_value){
+      slider(1);
+      ch5 = false;
+    }else{
+      slider(0);
+    }
   }
-  if (data.ch[9] == max_value) {
-    grab_sealing_right(1);
-    pick_up_motorR(180);
-    pickup_R = true;
-  }else{
-    if(pickup_R == true){
-      pick_up_motorR(0);
-      delay(500);
-      grab_sealing_right(0);
+  if(ch9 == true){
+    if (data.ch[9] == max_value) {
+      grab_sealing_right(1);
+      pick_up_motorR(180);
+      pickup_R = true;
+      ch9 = false;
+    }else if(data.ch[9] == min_value){
+      if(pickup_R == true){
+        pick_up_motorR(0);
+        motor_stop = true;
+        if(motor_stop == true){
+          grab_sealing_right(0);
+        }
+        
+      }
     }
   }
   
+  if(data.ch[11] == max_value){
+    right_up_slider(0);
+    right_up_griper(0);
+    release = true;
+
+  }else if(data.ch[11] == min_value) {
+    if (release == true){
+      right_do_slider(0);
+      right_up_slider(1);
+      right_do_griper(0);
+      release = false;
+    }
+    
+  }
 }
+  
+
 
 void pick_up_motorL(int position){
-  runMulti_Angle_speed(1,position,400);
+  runMulti_Angle_speed(1,position,1000);
 }
 
 void pick_up_motorR(int position){
-  runMulti_Angle_speed(2,position,400);
+  runMulti_Angle_speed(2,position,1000);
 }
 void grab_sealing_left() {
   left_griper(1);
