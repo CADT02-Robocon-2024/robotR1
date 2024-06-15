@@ -1,3 +1,4 @@
+#include "Arduino.h"
 #define min_value 282
 #define mid_value 1002
 #define max_value 1722
@@ -14,9 +15,35 @@ bool motor_stop = false;
 bool release = false;
 bool ch5 = false;
 bool ch9 = false;
+bool griperRelease = false;
+bool ch5MaxExecuted = false;
+bool ch5MidExecuted = true;
+bool ch9MaxExecuted = false;
+bool ch9MinExecuted = true;
+bool ch11MaxExecuted = false;
+bool ch11MinExecuted = true;
+
+unsigned long plantSealingStartTime = 0;
+bool plantSealingStep1Done = false;
+
+unsigned long plantSealingGStartTime = 0;
+bool plantSealingGStep1Done = false;
+
+enum State{
+  EXTEND_SEALING,
+  SHRINK_SEALING,
+  GRAP_SEALING,
+  RELEASE_SEALING,
+  PLANT_SEALING,
+  PLANT_SEALINGG
+};
+
+State currentState;
+
+
 
 unsigned long previousMillis = 0;
-const unsigned long interval = 2000; 
+const unsigned long interval = 3000; 
 
 void solenoid_init(){
   pinMode(solen_G_up_R, OUTPUT);
