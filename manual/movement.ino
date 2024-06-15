@@ -1,6 +1,6 @@
 void movement(){
-  float Vx = map1(data.ch[1], 282, 1722, 200.00, -200.00);
-  float Vy = map1(data.ch[0], 282, 1722, -200.00, 200.00);
+  float Vx = map(data.ch[1], 282, 1722, 200, -200);
+  float Vy = map(data.ch[0], 282, 1722, -200, 200);
   float omega = map1(data.ch[3], 282, 1722, -1.00, 1.00);
   // Serial.print("Vx:");
   // Serial.println(Vx);
